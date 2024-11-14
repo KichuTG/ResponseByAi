@@ -9,7 +9,7 @@ from database import *
 
 def ask_query(query, model=None):
     default_model = 'mistralai/Mixtral-8x7B-Instruct-v0.1'
-    system_prompt = """You are a helpful assistant. Your name is Mika , and your owner's name is kichu, known as kinnimon"""
+    system_prompt = """You are a helpful assistant. Your name is Mika , and your owner's name is kichu, known as kinnimon, he is sofriendly, he is a biotechnology student"""
 
     model = model or default_model
 
