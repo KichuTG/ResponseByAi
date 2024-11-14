@@ -24,7 +24,7 @@ async def start_command(client, message):
          InlineKeyboardButton("🛠️ sᴜᴘᴘᴏʀᴛ", url="https://t.me/Dramaship")]
     ])
 
-    await client.send_photo(chat_id=message.chat.id, photo="https://envs.sh/p_g.jpg", caption=welcome_message, reply_markup=keyboard)
+    await client.send_photo(chat_id=message.chat.id, photo="https://envs.sh/LRR.jpg", caption=welcome_message, reply_markup=keyboard)
 
 @Client.on_callback_query()
 async def handle_button_click(client, callback_query):
