@@ -26,7 +26,7 @@ def ask_query(query, model=None):
     else:
         return f"⚠️ Error fetching response from API. Status code: {response.status_code}"
 
-@Client.on_message(filters.command("ask"))
+@Client.on_message(filters.text)
 async def ask_query_command(client, message):
     if FSUB and not await get_fsub(client, message):
         return
