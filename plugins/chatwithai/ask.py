@@ -9,7 +9,7 @@ from database import *
 
 def ask_query(query, model=None):
     default_model = 'mistralai/Mixtral-8x7B-Instruct-v0.1'
-    system_prompt = """You are a helpful assistant. Your name is Mika , and your owner's name is kichu, known as kinnimon, he is sofriendly, he is a biotechnology student"""
+    system_prompt = """You are a helpful assistant. Your name is ResponseByAi, and your owner's name is Captain, known as @itzAsuraa"""
 
     model = model or default_model
 
@@ -26,33 +26,13 @@ def ask_query(query, model=None):
     else:
         return f"⚠️ Error fetching response from API. Status code: {response.status_code}"
 
-@Client.on_message(filters.text)
-async def ask_query_command(client, message):
+@Client.on_message(filters.text & filters.group)
+async def handle_text_message(client: Client, message: Message):
     if FSUB and not await get_fsub(client, message):
         return
 
-    # Get the query from the message
-    query = message.text.split(" ", 1)  # Split the command to get the query
-    if len(query) > 1:
-        user_query = query[1]  # Get the actual question part
-
-        # Send typing action to simulate a response delay
-        await send_typing_action(client, message.chat.id)
-
-        # Call the ask_query function to process the user query
-        reply = ask_query(user_query)  
-        user_mention = message.from_user.mention
-        await message.reply_text(f"{user_mention}, {reply} 🚀")
-    else:
-        await message.reply_text("📝 Please provide a query to ask ResponseByAi! Don't be shy, let's chat! 🤖💬.")
-
-@Client.on_message(filters.mentioned & filters.group)
-async def handle_mention(client: Client, message: Message):
-    if FSUB and not await get_fsub(client, message):
-        return
-
-    # Extract the text to process
-    user_text = message.reply_to_message.text.strip() if message.reply_to_message and message.reply_to_message.text else message.text.split(" ", 1)[1].strip()
+    # Get the text content of the message
+    user_text = message.text.strip()
 
     if user_text:
         # Send typing action to simulate a response delay
@@ -63,7 +43,7 @@ async def handle_mention(client: Client, message: Message):
         user_mention = message.from_user.mention
         await message.reply_text(f"{user_mention}, {reply} 🚀")
     else:
-        await message.reply("👋 Please ask a question after mentioning me! I’m here to help! 😊")
+        await message.reply("👋 Please type a message! I’m here to help! 😊")
 
 # Simulate Typing Action
 async def send_typing_action(client, chat_id, duration=1):
